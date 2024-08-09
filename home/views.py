@@ -1,14 +1,13 @@
-from itertools import repeat
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from .models import Person
+from .serializers import PersonSerializer
 
 
 class Home(APIView):
     def get(self, request):
-        return Response({'name': 'Ali'})
-
-    def post(self, request):
-        print(request.data)
-        name = request.data['name']
-        return Response({'name': name})
+        person = Person.objects.all()
+        ser_data = PersonSerializer(instance=person, many=True)
+        print(ser_data.data)
+        return Response(data=ser_data.data)
