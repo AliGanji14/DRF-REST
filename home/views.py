@@ -9,5 +9,4 @@ class Home(APIView):
     def get(self, request):
         person = Person.objects.all()
         ser_data = PersonSerializer(instance=person, many=True)
-        print(ser_data.data)
         return Response(data=ser_data.data)
