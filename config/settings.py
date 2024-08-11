@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_spectacular',
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
 ]
@@ -128,7 +129,16 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '3/hour',
-        'user': '10/hour',
-    }
+        'anon': '100/hour',
+        'user': '100/hour',
+    },
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Shop Rest',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
 }

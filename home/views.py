@@ -18,6 +18,11 @@ class Home(APIView):
 
 
 class QuestionListView(APIView):
+    """
+    List all questions, or create a new question.
+    """
+    serializer_class = QuestionSerializer
+
     def get(self, request):
         questions = Question.objects.all()
         ser_data = QuestionSerializer(instance=questions, many=True).data
@@ -25,7 +30,11 @@ class QuestionListView(APIView):
 
 
 class QuestionCreateView(APIView):
+    """
+        Create a new question
+    """
     permission_classes = [IsAuthenticated, ]
+    serializer_class = QuestionSerializer
 
     def post(self, request):
         srz_data = QuestionSerializer(data=request.data)
@@ -36,8 +45,11 @@ class QuestionCreateView(APIView):
 
 
 class QuestionUpdateView(APIView):
+    """
+        update a question
+    """
     permission_classes = [IsOwnerOrReadOnly, ]
-
+    serializer_class = QuestionSerializer
     def put(self, request, pk):
         question = Question.objects.get(pk=pk)
         self.check_object_permissions(request, question)
@@ -49,6 +61,9 @@ class QuestionUpdateView(APIView):
 
 
 class QuestionDeleteView(APIView):
+    """
+    delete a question
+    """
     permission_classes = [IsOwnerOrReadOnly, ]
 
     def delete(self, request, pk):
